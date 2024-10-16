@@ -1,0 +1,102 @@
+/* Lógico_1: */
+
+CREATE TABLE Cliente (
+    Nome VARCHAR,
+    Cpf___Cnpj VARCHAR PRIMARY KEY,
+    Telefone VARCHAR,
+    Email VARCHAR,
+    fk_Contrato_de_Locacao_Numero_do_contrato INT
+);
+
+CREATE TABLE Carro_ (
+    Ano INT,
+    Modelo VARCHAR,
+    Placa_ VARCHAR PRIMARY KEY,
+    Cor VARCHAR,
+    Disponibilidade_ VARCHAR
+);
+
+CREATE TABLE Moto (
+    Ano INT,
+    Modelo_ VARCHAR,
+    Placa VARCHAR PRIMARY KEY,
+    Cor VARCHAR,
+    Disponibilidade VARCHAR
+);
+
+CREATE TABLE Contrato_de_Locacao (
+    Placa_Veiculo VARCHAR,
+    Nome_Cliente VARCHAR,
+    Tipo_Veiculo VARCHAR,
+    Data_de_Entrega_Veiculo VARCHAR,
+    Data_de_Saida_Veiculo VARCHAR,
+    Numero_do_contrato INT PRIMARY KEY,
+    Nome_Funcionario_ VARCHAR,
+    Cpf___Cnpj_Cliente VARCHAR,
+    Nome_Gerente VARCHAR
+);
+
+CREATE TABLE Funcionario (
+    Nome VARCHAR PRIMARY KEY,
+    Cpf VARCHAR,
+    Telefone VARCHAR,
+    Endereco_ VARCHAR,
+    Login VARCHAR,
+    Senha INT
+);
+
+CREATE TABLE Gerente_ (
+    Senha VARCHAR,
+    Login VARCHAR,
+    Endereco VARCHAR,
+    Telefone VARCHAR,
+    Cpf VARCHAR,
+    Nome_ VARCHAR PRIMARY KEY,
+    fk_Contrato_de_Locacao_Numero_do_contrato INT
+);
+
+CREATE TABLE Aluga_Cliente_Moto_Carro_ (
+    fk_Cliente_Cpf___Cnpj VARCHAR,
+    fk_Moto_Placa VARCHAR,
+    fk_Carro__Placa_ VARCHAR
+);
+
+CREATE TABLE Gera (
+    fk_Funcionario_Nome VARCHAR,
+    fk_Contrato_de_Locacao_Numero_do_contrato INT
+);
+ 
+ALTER TABLE Cliente ADD CONSTRAINT FK_Cliente_2
+    FOREIGN KEY (fk_Contrato_de_Locacao_Numero_do_contrato)
+    REFERENCES Contrato_de_Locacao (Numero_do_contrato)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Gerente_ ADD CONSTRAINT FK_Gerente__2
+    FOREIGN KEY (fk_Contrato_de_Locacao_Numero_do_contrato)
+    REFERENCES Contrato_de_Locacao (Numero_do_contrato)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Aluga_Cliente_Moto_Carro_ ADD CONSTRAINT FK_Aluga_Cliente_Moto_Carro__1
+    FOREIGN KEY (fk_Cliente_Cpf___Cnpj)
+    REFERENCES Cliente (Cpf___Cnpj)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Aluga_Cliente_Moto_Carro_ ADD CONSTRAINT FK_Aluga_Cliente_Moto_Carro__2
+    FOREIGN KEY (fk_Moto_Placa)
+    REFERENCES Moto (Placa)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Aluga_Cliente_Moto_Carro_ ADD CONSTRAINT FK_Aluga_Cliente_Moto_Carro__3
+    FOREIGN KEY (fk_Carro__Placa_)
+    REFERENCES Carro_ (Placa_)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Gera ADD CONSTRAINT FK_Gera_1
+    FOREIGN KEY (fk_Funcionario_Nome)
+    REFERENCES Funcionario (Nome)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Gera ADD CONSTRAINT FK_Gera_2
+    FOREIGN KEY (fk_Contrato_de_Locacao_Numero_do_contrato)
+    REFERENCES Contrato_de_Locacao (Numero_do_contrato)
+    ON DELETE RESTRICT;
